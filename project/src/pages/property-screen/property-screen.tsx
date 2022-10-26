@@ -1,4 +1,4 @@
-function PropertySreen() {
+function PropertyScreen(): JSX.Element {
   return (
     <main className="page__main page__main--property">
       <section className="property">
@@ -281,4 +281,4 @@ function PropertySreen() {
   );
 }
 
-export default PropertySreen;
+export default PropertyScreen;
