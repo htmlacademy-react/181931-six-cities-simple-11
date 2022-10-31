@@ -1,3 +1,6 @@
+const RATING_STARS = 5;
+const MAX_PERCENT = 100;
+
 export enum AppRoute {
   Main = '/',
   Login = '/login',
@@ -9,3 +12,10 @@ export enum AuthorizationStatus {
   NoAuth = 'NO_AUTH',
   Unknown = 'UNKNOWN',
 }
+
+function formatRatingToWidth(rating: number) {
+  return (MAX_PERCENT / RATING_STARS) * Math.round(rating);
+}
+
+
+export { formatRatingToWidth};

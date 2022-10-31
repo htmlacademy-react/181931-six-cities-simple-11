@@ -1,7 +1,7 @@
 import React from 'react';
 
 function LocationsList(): JSX.Element {
-  const locations = [
+  const LOCATIONS = [
     'Paris',
     'Cologne',
     'Brussels',
@@ -9,7 +9,7 @@ function LocationsList(): JSX.Element {
     'Hamburg',
     'Dusseldorf',
   ];
-  const locationsItems = locations.map((location) => (
+  const locationsItems = LOCATIONS.map((location) => (
     <li className='locations__item' key={location}>
       <a className='locations__item-link tabs__item' href='/'>
         <span>{location}</span>
