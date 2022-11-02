@@ -3,9 +3,14 @@ import { Offers, TypeList } from '../types/offers';
 export const offers: Offers = [
   {
     id: 1,
-    images: ['img/apartment-01.jpg', 'img/apartment-02.jpg', 'img/apartment-03.jpg'],
+    images: [
+      'img/apartment-01.jpg',
+      'img/apartment-02.jpg',
+      'img/apartment-03.jpg',
+    ],
     title: '«Beautiful & luxurious studio at great location»',
-    description: 'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
+    description:
+      'A quiet cozy and picturesque that hides behind a a river by the unique lightness of Amsterdam. The building is green and from 18th century.',
     isPremium: true,
     type: TypeList.hotel,
     rating: 4.8,

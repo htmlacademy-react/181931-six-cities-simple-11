@@ -1,4 +1,5 @@
 import React from 'react';
+import { NavLink } from 'react-router-dom';
 
 function LocationsList(): JSX.Element {
   const LOCATIONS = [
@@ -9,11 +10,12 @@ function LocationsList(): JSX.Element {
     'Hamburg',
     'Dusseldorf',
   ];
+
   const locationsItems = LOCATIONS.map((location) => (
     <li className='locations__item' key={location}>
-      <a className='locations__item-link tabs__item' href='/'>
+      <NavLink className='locations__item-link tabs__item' to='/'>
         <span>{location}</span>
-      </a>
+      </NavLink>
     </li>
   ));
 

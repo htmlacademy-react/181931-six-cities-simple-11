@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import OfferCard from '../../components/offer-card/offer-card';
 import LocationsList from '../../components/locations/locations';
 import { Offers } from '../../types/offers';
@@ -8,8 +7,6 @@ type MainPageProps = {
 };
 
 function MainScreen({ offers }: MainPageProps): JSX.Element {
-  // const [selected, setSelected] = useState(0);
-
   return (
     <main
       className={
