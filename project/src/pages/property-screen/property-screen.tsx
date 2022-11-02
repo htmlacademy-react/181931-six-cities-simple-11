@@ -53,7 +53,8 @@ function PropertyScreen({ offers, reviews }: PropertyPageProps): JSX.Element {
                   style={{
                     width: formatRatingToWidth(offer.rating),
                   }}
-                ></span>
+                >
+                </span>
                 <span className='visually-hidden'>Rating</span>
               </div>
               <span className='property__rating-value rating__value'>
