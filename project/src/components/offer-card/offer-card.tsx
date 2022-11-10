@@ -9,8 +9,9 @@ type CardProps = {
 };
 
 function OfferCard({ offer }: CardProps): JSX.Element {
+
   return (
-    <article className='cities__card place-card'>
+    <article className='cities__card place-card' >
       {offer.isPremium && (
         <div className='place-card__mark'>
           <span>Premium</span>
@@ -23,7 +24,7 @@ function OfferCard({ offer }: CardProps): JSX.Element {
             src='img/apartment-01.jpg'
             width='260'
             height='200'
-            alt='Place image'
+            alt='Place'
           />
         </Link>
       </div>

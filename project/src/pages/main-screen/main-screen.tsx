@@ -1,12 +1,15 @@
+import React from 'react';
 import OfferCard from '../../components/offer-card/offer-card';
 import LocationsList from '../../components/locations/locations';
 import { Offers } from '../../types/offers';
+import Map from '../../components/map/map';
 
 type MainPageProps = {
   offers: Offers;
 };
 
-function MainScreen({ offers }: MainPageProps): JSX.Element {
+function MainScreen({ offers}: MainPageProps): JSX.Element {
+
   return (
     <main
       className={
@@ -62,7 +65,9 @@ function MainScreen({ offers }: MainPageProps): JSX.Element {
               </div>
             </section>
             <div className='cities__right-section'>
-              <section className='cities__map map'></section>
+              <section className='cities__map map'>
+                <Map city={offers[0].city} offers={offers} />
+              </section>
             </div>
           </div>
         )}
