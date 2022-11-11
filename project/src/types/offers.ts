@@ -11,6 +11,17 @@ export enum TypeList {
   hotel = 'Hotel',
 }
 
+type LocationCoordinates = {
+  latitude: number;
+  longitude: number;
+  zoom: number;
+};
+
+export type OfferCity = {
+  location: LocationCoordinates;
+  name:string;
+}
+
 export type Offer = {
   id: number;
   images: string[];
@@ -24,6 +35,8 @@ export type Offer = {
   price: number;
   goods: string[];
   host: Host;
+  city: OfferCity;
+  location: LocationCoordinates;
 };
 
 
