@@ -7,6 +7,7 @@ import ReviewsForm from '../../components/reviews-form/reviews-form';
 import OfferCard from '../../components/offer-card/offer-card';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { formatRatingToWidth } from '../../const';
+import Map from '../../components/map/map';
 
 type PropertyPageProps = {
   offers: Offers;
@@ -125,7 +126,9 @@ function PropertyScreen({ offers, reviews }: PropertyPageProps): JSX.Element {
             </section>
           </div>
         </div>
-        <section className='property__map map'></section>
+        <section className='property__map map'>
+          <Map city={offers[0].city} offers={offers} />
+        </section>
       </section>
       <div className='container'>
         <section className='near-places places'>
