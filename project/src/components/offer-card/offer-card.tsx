@@ -3,15 +3,31 @@ import { generatePath } from 'react-router';
 import { AppRoute } from '../../const';
 import { Offer } from '../../types/offers';
 import { formatRatingToWidth } from '../../const';
+import { MouseEvent } from 'react';
+import cn from 'classnames';
 
 type CardProps = {
   offer: Offer;
+  handleCardMouseEnter?: (id: number) => void;
+  handleCardMouseLeave?: () => void;
+  isActive: boolean;
+  cardClassName:string;
 };
 
-function OfferCard({ offer }: CardProps): JSX.Element {
+function OfferCard({offer,
+  handleCardMouseEnter,
+  handleCardMouseLeave,
+  isActive,
+  cardClassName} : CardProps): JSX.Element {
 
   return (
-    <article className='cities__card place-card' >
+    <article className={cn('place-card', `${cardClassName}__card`, { active: isActive })}
+      id={`offer-${offer.id}`}
+      onMouseEnter={(event: MouseEvent<HTMLElement>) =>
+        handleCardMouseEnter && handleCardMouseEnter(offer.id)}
+      onMouseLeave={(event: MouseEvent<HTMLElement>) =>
+        handleCardMouseLeave && handleCardMouseLeave()}
+    >
       {offer.isPremium && (
         <div className='place-card__mark'>
           <span>Premium</span>
@@ -21,7 +37,7 @@ function OfferCard({ offer }: CardProps): JSX.Element {
         <Link to={generatePath(AppRoute.Room, { id: String(offer.id) })}>
           <img
             className='place-card__image'
-            src='img/apartment-01.jpg'
+            src={offer.images[0]}
             width='260'
             height='200'
             alt='Place'

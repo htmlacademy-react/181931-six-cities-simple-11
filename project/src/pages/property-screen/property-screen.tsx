@@ -1,6 +1,6 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
-import { Offers } from '../../types/offers';
+import { Offer } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
 import ReviewCard from '../../components/review-card/review-card';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
@@ -8,27 +8,41 @@ import OfferCard from '../../components/offer-card/offer-card';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { formatRatingToWidth } from '../../const';
 import Map from '../../components/map/map';
+import useAppSelector from '../../hooks/useAppSelector';
 
 type PropertyPageProps = {
-  offers: Offers;
   reviews: Reviews;
+  onMouseCardEnter?:(id:number) => void;
+  onMouseCardLeave?:() => void;
+  activeCardId: number | null;
+  cardClassName: string;
 };
 
-function PropertyScreen({ offers, reviews }: PropertyPageProps): JSX.Element {
+function PropertyScreen( {onMouseCardEnter, onMouseCardLeave, activeCardId, cardClassName, reviews}: PropertyPageProps): JSX.Element {
   const params = useParams();
-  const offer = offers.find((item) => item.id === Number(params.id));
+  const currentCity = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
+  const currentCityOffers = offers.filter((offer) => offer.city.name === currentCity.name);
+  const offer: Offer | undefined = currentCityOffers.find(
+    (item) => item.id === Number(params.id)
+  );
   const reviewsForOffer = reviews.filter((it) => it.id === Number(params.id));
 
   if (!offer) {
     return <NotFoundScreen />;
   }
 
+  const offersNearby = currentCityOffers
+    .filter((item) => item.id !== Number(params.id))
+    .slice(0, 3);
+  const offersNearbyWithCurrent = offersNearby.concat(offer);
+
   return (
     <main className='page__main page__main--property'>
       <section className='property'>
         <div className='property__gallery-container container'>
           <div className='property__gallery'>
-            {offer.images.map((item) => (
+            {offer.images.map((item: string) => (
               <div key={item} className='property__image-wrapper'>
                 <img
                   className='property__image'
@@ -75,13 +89,13 @@ function PropertyScreen({ offers, reviews }: PropertyPageProps): JSX.Element {
               </li>
             </ul>
             <div className='property__price'>
-              <b className='property__price-value'>&euro;{offer.price}</b>
+              <b className='property__price-value'>&euro; {offer.price}</b>
               <span className='property__price-text'>&nbsp;night</span>
             </div>
             <div className='property__inside'>
               <h2 className='property__inside-title'>What&apos;s inside</h2>
               <ul className='property__inside-list'>
-                {offer.goods.map((item) => (
+                {offer.goods.map((item:string) => (
                   <li key={item} className='property__inside-item'>
                     {item}
                   </li>
@@ -100,7 +114,7 @@ function PropertyScreen({ offers, reviews }: PropertyPageProps): JSX.Element {
                     alt='Host avatar'
                   />
                 </div>
-                <span className='property__user-name'>{offer.host.avatar}</span>
+                <span className='property__user-name'>{offer.host.name}</span>
                 {offer.host.isPro ?? (
                   <span className='property__user-status'>Pro</span>
                 )}
@@ -118,7 +132,10 @@ function PropertyScreen({ offers, reviews }: PropertyPageProps): JSX.Element {
               </h2>
               <ul className='reviews__list'>
                 {reviewsForOffer.map((item) => (
-                  <ReviewCard key={item.id} review={item} />
+                  <ReviewCard
+                    key={item.id}
+                    review={item}
+                  />
                 ))}
               </ul>
 
@@ -127,7 +144,11 @@ function PropertyScreen({ offers, reviews }: PropertyPageProps): JSX.Element {
           </div>
         </div>
         <section className='property__map map'>
-          <Map city={offers[0].city} offers={offers} />
+          <Map city={currentCity}
+            offers={offersNearbyWithCurrent}
+            activeOfferId={Number(params.id)}
+            mapClassName="property__map"
+          />
         </section>
       </section>
       <div className='container'>
@@ -136,8 +157,13 @@ function PropertyScreen({ offers, reviews }: PropertyPageProps): JSX.Element {
             Other places in the neighbourhood
           </h2>
           <div className='near-places__list places__list'>
-            {offers.slice(0, 3).map((item) => (
-              <OfferCard key={item.id} offer={item} />
+            {offersNearby.map((item) => (
+              <OfferCard key={item.id} offer={item}
+                handleCardMouseEnter={onMouseCardEnter}
+                handleCardMouseLeave={onMouseCardLeave}
+                activeCardId={item.id}
+                cardClassName="near-places"
+              />
             ))}
           </div>
         </section>

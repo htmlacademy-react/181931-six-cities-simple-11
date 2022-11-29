@@ -26,9 +26,9 @@ export const offers: Offers = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.3609553943508,
-        longitude: 4.85309666406198,
-        zoom: 10,
+        latitude: 52.37454,
+        longitude: 4.897976,
+        zoom: 13,
       },
     },
     location: {
@@ -57,9 +57,9 @@ export const offers: Offers = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.3609553943508,
-        longitude: 4.85309666406198,
-        zoom: 10,
+        latitude: 52.37454,
+        longitude: 4.897976,
+        zoom: 13,
       },
     },
     location: {
@@ -88,14 +88,14 @@ export const offers: Offers = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.3609553943508,
-        longitude: 4.85309666406198,
-        zoom: 10,
+        latitude: 52.37454,
+        longitude: 4.897976,
+        zoom: 13,
       },
     },
     location: {
-      latitude: 52.3909553943508,
-      longitude: 4.85309666406198,
+      latitude: 52.39095,
+      longitude: 4.85,
       zoom: 16,
     },
   },
@@ -119,14 +119,45 @@ export const offers: Offers = [
     city: {
       name: 'Amsterdam',
       location: {
-        latitude: 52.3609553943508,
-        longitude: 4.85309666406198,
-        zoom: 10,
+        latitude: 52.37454,
+        longitude: 4.897976,
+        zoom: 13,
       },
     },
     location: {
-      latitude: 52.3909553943508,
-      longitude: 4.85309666406198,
+      latitude: 52.65,
+      longitude: 4.85,
+      zoom: 16,
+    },
+  },
+  {
+    id: 5,
+    images: ['img/apartment-01.jpg'],
+    title: '«Bla - Bla lounge»',
+    description: 'A quiet cozy and picturesque ',
+    isPremium: false,
+    type: TypeList.house,
+    rating: 1.8,
+    bedrooms: 5,
+    maxAdults: 10,
+    price: 120,
+    goods: ['Wifi', 'Heating', 'Kitchen', 'Cable TV'],
+    host: {
+      avatar: 'img/avatar-angelina.jpg',
+      name: 'Angelina',
+      isPro: true,
+    },
+    city: {
+      name: 'Paris',
+      location: {
+        latitude: 48.85661,
+        longitude: 2.351499,
+        zoom: 13,
+      },
+    },
+    location: {
+      latitude: 48.85661,
+      longitude: 2.351499,
       zoom: 16,
     },
   },

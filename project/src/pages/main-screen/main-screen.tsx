@@ -1,27 +1,34 @@
 import React from 'react';
 import OfferCard from '../../components/offer-card/offer-card';
 import LocationsList from '../../components/locations/locations';
-import { Offers } from '../../types/offers';
 import Map from '../../components/map/map';
+import useAppSelector from '../../hooks/useAppSelector';
+import cn from 'classnames';
+import { useState } from 'react';
 
-type MainPageProps = {
-  offers: Offers;
-};
+function MainScreen(): JSX.Element {
+  const [activeCardId, setActiveCardId] = useState<number | null>(null);
+  const currentCity = useAppSelector((state) => state.city);
+  const offers = useAppSelector((state) => state.offers);
+  const currentCityOffers = offers.filter(
+    (offer) => offer.city.name === currentCity.name
+  );
 
-function MainScreen({ offers}: MainPageProps): JSX.Element {
+  const handleMouseEnter = (offerId: number | null) => {
+    setActiveCardId(offerId);
+  };
+  const handleMouseLeave = () => {
+    setActiveCardId(null);
+  };
 
   return (
     <main
-      className={
-        offers.length > 1
-          ? 'page__main page__main--index'
-          : 'page__main page__main--index page__main--index-empty'
-      }
+      className={cn('page page--gray page--main',{'page__main--index-empty':!currentCityOffers.length})}
     >
       <h1 className='visually-hidden'>Cities</h1>
       <div className='tabs'>
         <section className='locations container'>
-          <LocationsList />
+          <LocationsList currentCity={currentCity} />
         </section>
       </div>
       <div className='cities'>
@@ -30,7 +37,7 @@ function MainScreen({ offers}: MainPageProps): JSX.Element {
             <section className='cities__places places'>
               <h2 className='visually-hidden'>Places</h2>
               <b className='places__found'>
-                {offers.length} places to stay in Amsterdam
+                {currentCityOffers.length} places to stay in {currentCity.name}
               </b>
               <form className='places__sorting' action='/' method='get'>
                 <span className='places__sorting-caption'>Sort by</span>
@@ -59,14 +66,14 @@ function MainScreen({ offers}: MainPageProps): JSX.Element {
                 </ul>
               </form>
               <div className='cities__places-list places__list tabs__content'>
-                {offers.map((offer) => (
-                  <OfferCard key={offer.id} offer={offer} />
+                {currentCityOffers.map((offer) => (
+                  <OfferCard key={offer.id} offer={offer} onMouseCardEnter={handleMouseEnter} onMouseCardLeave={handleMouseLeave} activeCardId={activeCardId} cardClassName='cities'/>
                 ))}
               </div>
             </section>
             <div className='cities__right-section'>
               <section className='cities__map map'>
-                <Map city={offers[0].city} offers={offers} />
+                <Map city={currentCity} offers={currentCityOffers} activeOfferId={activeCardId} mapClassName='cities__map'/>
               </section>
             </div>
           </div>
