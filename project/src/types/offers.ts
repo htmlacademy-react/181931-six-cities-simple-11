@@ -1,7 +1,9 @@
 export type Host = {
-  avatar: string;
+  avatar?: string;
   name: string;
-  isPro: boolean;
+  isPro?: boolean;
+  id: number;
+  avatarUrl: string;
 }
 
 export enum TypeList {
@@ -28,7 +30,7 @@ export type Offer = {
   title?: string;
   description: string;
   isPremium: boolean;
-  type: TypeList;
+  type: string;
   rating: number;
   bedrooms: number;
   maxAdults: number;
@@ -37,6 +39,7 @@ export type Offer = {
   host: Host;
   city: OfferCity;
   location: LocationCoordinates;
+  previewImage: string;
 };
 
 

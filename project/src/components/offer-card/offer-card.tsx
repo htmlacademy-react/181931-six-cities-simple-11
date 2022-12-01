@@ -8,15 +8,15 @@ import cn from 'classnames';
 
 type CardProps = {
   offer: Offer;
-  handleCardMouseEnter?: (id: number) => void;
-  handleCardMouseLeave?: () => void;
+  onMouseCardEnter: (id: number) => void;
+  onMouseCardLeave: () => void;
   isActive: boolean;
   cardClassName:string;
 };
 
 function OfferCard({offer,
-  handleCardMouseEnter,
-  handleCardMouseLeave,
+  onMouseCardEnter,
+  onMouseCardLeave,
   isActive,
   cardClassName} : CardProps): JSX.Element {
 
@@ -24,9 +24,9 @@ function OfferCard({offer,
     <article className={cn('place-card', `${cardClassName}__card`, { active: isActive })}
       id={`offer-${offer.id}`}
       onMouseEnter={(event: MouseEvent<HTMLElement>) =>
-        handleCardMouseEnter && handleCardMouseEnter(offer.id)}
+        onMouseCardEnter && onMouseCardEnter(offer.id)}
       onMouseLeave={(event: MouseEvent<HTMLElement>) =>
-        handleCardMouseLeave && handleCardMouseLeave()}
+        onMouseCardLeave && onMouseCardLeave()}
     >
       {offer.isPremium && (
         <div className='place-card__mark'>

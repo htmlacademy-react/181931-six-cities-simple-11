@@ -5,12 +5,14 @@ import Map from '../../components/map/map';
 import useAppSelector from '../../hooks/useAppSelector';
 import cn from 'classnames';
 import { useState } from 'react';
+import Sort from '../../components/sort/sort';
+import { sortOffers } from '../../utils/sort';
 
 function MainScreen(): JSX.Element {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
   const currentCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
-  const currentCityOffers = offers.filter(
+  let currentCityOffers = offers.filter(
     (offer) => offer.city.name === currentCity.name
   );
 
@@ -20,6 +22,9 @@ function MainScreen(): JSX.Element {
   const handleMouseLeave = () => {
     setActiveCardId(null);
   };
+
+  const currentSortOffersBy = useAppSelector((state) => state.sortOffersBy);
+  currentCityOffers = sortOffers(currentCityOffers, currentSortOffersBy);
 
   return (
     <main
@@ -39,35 +44,19 @@ function MainScreen(): JSX.Element {
               <b className='places__found'>
                 {currentCityOffers.length} places to stay in {currentCity.name}
               </b>
-              <form className='places__sorting' action='/' method='get'>
-                <span className='places__sorting-caption'>Sort by</span>
-                <span className='places__sorting-type' tabIndex={0}>
-                  Popular
-                  <svg className='places__sorting-arrow' width='7' height='4'>
-                    <use xlinkHref='/icon-arrow-select'></use>
-                  </svg>
-                </span>
-                <ul className='places__options places__options--custom places__options--opened'>
-                  <li
-                    className='places__option places__option--active'
-                    tabIndex={0}
-                  >
-                    Popular
-                  </li>
-                  <li className='places__option' tabIndex={0}>
-                    Price: low to high
-                  </li>
-                  <li className='places__option' tabIndex={0}>
-                    Price: high to low
-                  </li>
-                  <li className='places__option' tabIndex={0}>
-                    Top rated first
-                  </li>
-                </ul>
-              </form>
+              {currentCityOffers.length > 0 && (
+                <Sort />
+              )}
               <div className='cities__places-list places__list tabs__content'>
                 {currentCityOffers.map((offer) => (
-                  <OfferCard key={offer.id} offer={offer} onMouseCardEnter={handleMouseEnter} onMouseCardLeave={handleMouseLeave} activeCardId={activeCardId} cardClassName='cities'/>
+                  <OfferCard
+                    key={offer.id}
+                    offer={offer}
+                    onMouseCardEnter={handleMouseEnter}
+                    onMouseCardLeave={handleMouseLeave}
+                    isActive={offer.id === activeCardId}
+                    cardClassName='cities'
+                  />
                 ))}
               </div>
             </section>

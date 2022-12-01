@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Offer } from '../../types/offers';
 import { Reviews } from '../../types/reviews';
@@ -12,16 +12,16 @@ import useAppSelector from '../../hooks/useAppSelector';
 
 type PropertyPageProps = {
   reviews: Reviews;
-  onMouseCardEnter?:(id:number) => void;
-  onMouseCardLeave?:() => void;
-  activeCardId: number | null;
-  cardClassName: string;
 };
 
-function PropertyScreen( {onMouseCardEnter, onMouseCardLeave, activeCardId, cardClassName, reviews}: PropertyPageProps): JSX.Element {
+function PropertyScreen({
+  reviews}: PropertyPageProps): JSX.Element {
   const params = useParams();
   const currentCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
+
+  const [activeOfferId, setActiveOfferId] = useState<number | null>(Number(params.id));
+
   const currentCityOffers = offers.filter((offer) => offer.city.name === currentCity.name);
   const offer: Offer | undefined = currentCityOffers.find(
     (item) => item.id === Number(params.id)
@@ -47,7 +47,7 @@ function PropertyScreen( {onMouseCardEnter, onMouseCardLeave, activeCardId, card
                 <img
                   className='property__image'
                   src={item}
-                  alt='Photo studio'
+                  alt=''
                 />
               </div>
             ))}
@@ -106,13 +106,15 @@ function PropertyScreen( {onMouseCardEnter, onMouseCardLeave, activeCardId, card
               <h2 className='property__host-title'>Meet the host</h2>
               <div className='property__host-user user'>
                 <div className='property__avatar-wrapper property__avatar-wrapper--pro user__avatar-wrapper'>
-                  <img
-                    className='property__avatar user__avatar'
-                    src={offer.host.avatar}
-                    width='74'
-                    height='74'
-                    alt='Host avatar'
-                  />
+                  {offer.host.avatar && (
+                    <img
+                      className='property__avatar user__avatar'
+                      src={offer.host.avatar}
+                      width='74'
+                      height='74'
+                      alt='Host avatar'
+                    />
+                  )}
                 </div>
                 <span className='property__user-name'>{offer.host.name}</span>
                 {offer.host.isPro ?? (
@@ -158,10 +160,12 @@ function PropertyScreen( {onMouseCardEnter, onMouseCardLeave, activeCardId, card
           </h2>
           <div className='near-places__list places__list'>
             {offersNearby.map((item) => (
-              <OfferCard key={item.id} offer={item}
-                handleCardMouseEnter={onMouseCardEnter}
-                handleCardMouseLeave={onMouseCardLeave}
-                activeCardId={item.id}
+              <OfferCard
+                key={item.id}
+                offer={item}
+                onMouseCardEnter={() => setActiveOfferId(item.id)}
+                onMouseCardLeave={()=> setActiveOfferId(null)}
+                isActive={item.id === activeOfferId}
                 cardClassName="near-places"
               />
             ))}
