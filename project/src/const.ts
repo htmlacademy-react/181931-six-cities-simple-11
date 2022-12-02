@@ -23,5 +23,13 @@ export const URL_MARKER_DEFAULT =
 export const URL_MARKER_CURRENT =
   'img/pin-active.svg';
 
+export const INITIAL_SORT_VALUE = 'Popular';
+
+export enum SortOptions {
+  Popular = 'Popular',
+  LowToHigh = 'Price: low to high',
+  HighToLow = 'Price: high to low',
+  TopRated = 'Top rated first',
+}
 
 export { formatRatingToWidth};

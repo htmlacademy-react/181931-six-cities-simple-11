@@ -8,42 +8,42 @@ function PropertyNotLoggedScreen () {
               <img
                 className="property__image"
                 src="img/room.jpg"
-                alt="Photo studio"
+                alt="studio"
               />
             </div>
             <div className="property__image-wrapper">
               <img
                 className="property__image"
                 src="img/apartment-01.jpg"
-                alt="Photo studio"
+                alt="studio"
               />
             </div>
             <div className="property__image-wrapper">
               <img
                 className="property__image"
                 src="img/apartment-02.jpg"
-                alt="Photo studio"
+                alt="studio"
               />
             </div>
             <div className="property__image-wrapper">
               <img
                 className="property__image"
                 src="img/apartment-03.jpg"
-                alt="Photo studio"
+                alt="studio"
               />
             </div>
             <div className="property__image-wrapper">
               <img
                 className="property__image"
                 src="img/studio-01.jpg"
-                alt="Photo studio"
+                alt="studio"
               />
             </div>
             <div className="property__image-wrapper">
               <img
                 className="property__image"
                 src="img/apartment-01.jpg"
-                alt="Photo studio"
+                alt="studio"
               />
             </div>
           </div>
@@ -178,7 +178,7 @@ function PropertyNotLoggedScreen () {
                     src="img/room.jpg"
                     width={260}
                     height={200}
-                    alt="Place image"
+                    alt="Place"
                   />
                 </a>
               </div>
@@ -209,7 +209,7 @@ function PropertyNotLoggedScreen () {
                     src="img/apartment-02.jpg"
                     width={260}
                     height={200}
-                    alt="Place image"
+                    alt="Place"
                   />
                 </a>
               </div>
@@ -243,7 +243,7 @@ function PropertyNotLoggedScreen () {
                     src="img/apartment-03.jpg"
                     width={260}
                     height={200}
-                    alt="Place image"
+                    alt="Place"
                   />
                 </a>
               </div>
