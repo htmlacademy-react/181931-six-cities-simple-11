@@ -23,10 +23,6 @@ function OfferCard({offer,
   return (
     <article className={cn('place-card', `${cardClassName}__card`, { active: isActive })}
       id={`offer-${offer.id}`}
-      onMouseEnter={(event: MouseEvent<HTMLElement>) =>
-        onMouseCardEnter && onMouseCardEnter(offer.id)}
-      onMouseLeave={(event: MouseEvent<HTMLElement>) =>
-        onMouseCardLeave && onMouseCardLeave()}
     >
       {offer.isPremium && (
         <div className='place-card__mark'>

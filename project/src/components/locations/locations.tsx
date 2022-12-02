@@ -13,50 +13,31 @@ type CityMenuProps = {
 };
 
 function LocationsList({ currentCity }: CityMenuProps): JSX.Element {
-  // const LOCATIONS = [
-  //   'Paris',
-  //   'Cologne',
-  //   'Brussels',
-  //   'Amsterdam',
-  //   'Hamburg',
-  //   'Dusseldorf',
-  // ];
   const dispatch = useAppDispatch();
 
   const handleChangeCity = (
-    event: MouseEvent<HTMLAnchorElement>,
+    // event: MouseEvent<HTMLAnchorElement>,
     city: CityType
   ) => {
-    event.preventDefault();
     dispatch(changeCityAction(city));
   };
   return (
     <ul className='locations__list tabs__list'>
       {cities.map((city) => (
         <li className='locations__item' key={`city-${city.name}`}>
-          <Link
+          <span
             className={cn('locations__item-link tabs__item', {
               'tabs__item--active': city === currentCity,
             })}
-            to={AppRoute.Main}
-            onClick={(e) => handleChangeCity(e, city)}
+            style={city !== currentCity ? {cursor:'pointer'} : {}}
+            onClick={()=>handleChangeCity(city)}
           >
             <span>{city.name}</span>
-          </Link>
+          </span>
         </li>
       ))}
     </ul>
   );
-
-  // const locationsItems = LOCATIONS.map((location) => (
-  //   <li className='locations__item' key={location}>
-  //     <NavLink className='locations__item-link tabs__item' to='/'>
-  //       <span>{location}</span>
-  //     </NavLink>
-  //   </li>
-  // ));
-
-  // return <ul className='locations__list tabs__list'>{locationsItems}</ul>;
 }
 
 export default LocationsList;

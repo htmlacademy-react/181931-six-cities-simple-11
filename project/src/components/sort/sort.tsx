@@ -8,7 +8,7 @@ import { sortOffersByAction } from '../../store/action';
 function Sort(): JSX.Element {
   const dispatch = useAppDispatch();
   const activeSortOffersBy = useAppSelector((state) => state.sortOffersBy);
-  const [isSortOpen, setSortOpen] = useState<boolean>(false);
+  const [isSortOpen, setSortOpen] = useState(false);
 
   return (
     <form className='places__sorting' action='#' method='get' onClick={()=>setSortOpen(!isSortOpen)}>
@@ -24,19 +24,19 @@ function Sort(): JSX.Element {
           'places__options--opened': isSortOpen,
         })}
       >
-        {Object.entries(SortOptions).map(([key, value]) => (
+        {Object.values(SortOptions).map((item) => (
           <li
             className={cn('places__option', {
-              'places__option--active': value === activeSortOffersBy,
+              'places__option--active': item === activeSortOffersBy,
             })}
             tabIndex={0}
-            key={key}
+            key={item}
             onClick={() => {
               setSortOpen(!isSortOpen);
-              dispatch(sortOffersByAction(value));
+              dispatch(sortOffersByAction(item));
             }}
           >
-            {value}
+            {item}
           </li>
         ))}
       </ul>
