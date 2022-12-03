@@ -1,10 +1,18 @@
 const RATING_STARS = 5;
 const MAX_PERCENT = 100;
+const TIMEOUT_SHOW_ERROR = 5000;
 
 export enum AppRoute {
   Main = '/',
   Login = '/login',
   Room = '/offer/:id',
+}
+
+export enum APIRoute {
+  Offers = '/hotels',
+  Reviews = '/comments',
+  Login = '/login',
+  Logout = '/logout',
 }
 
 export enum AuthorizationStatus {
@@ -17,13 +25,13 @@ function formatRatingToWidth(rating: number) {
   return (MAX_PERCENT / RATING_STARS) * Math.round(rating);
 }
 
-export const URL_MARKER_DEFAULT =
+const URL_MARKER_DEFAULT =
   'img/pin.svg';
 
-export const URL_MARKER_CURRENT =
+const URL_MARKER_CURRENT =
   'img/pin-active.svg';
 
-export const INITIAL_SORT_VALUE = 'Popular';
+const INITIAL_SORT_VALUE = 'Popular';
 
 export enum SortOptions {
   Popular = 'Popular',
@@ -32,4 +40,4 @@ export enum SortOptions {
   TopRated = 'Top rated first',
 }
 
-export { formatRatingToWidth};
+export { formatRatingToWidth, TIMEOUT_SHOW_ERROR, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, INITIAL_SORT_VALUE};

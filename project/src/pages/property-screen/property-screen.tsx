@@ -6,7 +6,7 @@ import ReviewCard from '../../components/review-card/review-card';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import OfferCard from '../../components/offer-card/offer-card';
 import NotFoundScreen from '../not-found-screen/not-found-screen';
-import { formatRatingToWidth } from '../../const';
+import { formatRatingToWidth, AuthorizationStatus } from '../../const';
 import Map from '../../components/map/map';
 import useAppSelector from '../../hooks/useAppSelector';
 
@@ -14,15 +14,21 @@ type PropertyPageProps = {
   reviews: Reviews;
 };
 
-function PropertyScreen({
-  reviews}: PropertyPageProps): JSX.Element {
+function PropertyScreen({ reviews }: PropertyPageProps): JSX.Element {
   const params = useParams();
   const currentCity = useAppSelector((state) => state.city);
   const offers = useAppSelector((state) => state.offers);
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
 
-  const [activeOfferId, setActiveOfferId] = useState<number | null>(Number(params.id));
+  const [activeOfferId, setActiveOfferId] = useState<number | null>(
+    Number(params.id)
+  );
 
-  const currentCityOffers = offers.filter((offer) => offer.city.name === currentCity.name);
+  const currentCityOffers = offers.filter(
+    (offer) => offer.city.name === currentCity.name
+  );
   const offer: Offer | undefined = currentCityOffers.find(
     (item) => item.id === Number(params.id)
   );
@@ -37,6 +43,7 @@ function PropertyScreen({
     .slice(0, 3);
   const offersNearbyWithCurrent = offersNearby.concat(offer);
 
+
   return (
     <main className='page__main page__main--property'>
       <section className='property'>
@@ -44,11 +51,7 @@ function PropertyScreen({
           <div className='property__gallery'>
             {offer.images.map((item: string) => (
               <div key={item} className='property__image-wrapper'>
-                <img
-                  className='property__image'
-                  src={item}
-                  alt=''
-                />
+                <img className='property__image' src={item} alt='' />
               </div>
             ))}
           </div>
@@ -95,7 +98,7 @@ function PropertyScreen({
             <div className='property__inside'>
               <h2 className='property__inside-title'>What&apos;s inside</h2>
               <ul className='property__inside-list'>
-                {offer.goods.map((item:string) => (
+                {offer.goods.map((item: string) => (
                   <li key={item} className='property__inside-item'>
                     {item}
                   </li>
@@ -134,22 +137,21 @@ function PropertyScreen({
               </h2>
               <ul className='reviews__list'>
                 {reviewsForOffer.map((item) => (
-                  <ReviewCard
-                    key={item.id}
-                    review={item}
-                  />
+                  <ReviewCard key={item.id} review={item} />
                 ))}
               </ul>
-
-              <ReviewsForm />
+              {authorizationStatus === AuthorizationStatus.Auth ? (
+                <ReviewsForm />
+              ) : null}
             </section>
           </div>
         </div>
         <section className='property__map map'>
-          <Map city={currentCity}
+          <Map
+            city={currentCity}
             offers={offersNearbyWithCurrent}
             activeOfferId={Number(params.id)}
-            mapClassName="property__map"
+            mapClassName='property__map'
           />
         </section>
       </section>
@@ -164,9 +166,9 @@ function PropertyScreen({
                 key={item.id}
                 offer={item}
                 onMouseCardEnter={() => setActiveOfferId(item.id)}
-                onMouseCardLeave={()=> setActiveOfferId(null)}
+                onMouseCardLeave={() => setActiveOfferId(null)}
                 isActive={item.id === activeOfferId}
-                cardClassName="near-places"
+                cardClassName='near-places'
               />
             ))}
           </div>

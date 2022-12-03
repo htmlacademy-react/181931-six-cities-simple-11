@@ -3,7 +3,6 @@ import { generatePath } from 'react-router';
 import { AppRoute } from '../../const';
 import { Offer } from '../../types/offers';
 import { formatRatingToWidth } from '../../const';
-import { MouseEvent } from 'react';
 import cn from 'classnames';
 
 type CardProps = {
