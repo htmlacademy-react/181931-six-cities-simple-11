@@ -1,6 +1,5 @@
 const RATING_STARS = 5;
 const MAX_PERCENT = 100;
-const TIMEOUT_SHOW_ERROR = 5000;
 
 export enum AppRoute {
   Main = '/',
@@ -40,4 +39,4 @@ export enum SortOptions {
   TopRated = 'Top rated first',
 }
 
-export { formatRatingToWidth, TIMEOUT_SHOW_ERROR, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, INITIAL_SORT_VALUE};
+export { formatRatingToWidth, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, INITIAL_SORT_VALUE};
