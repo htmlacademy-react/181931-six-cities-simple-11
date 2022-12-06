@@ -1,48 +1,50 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
-import { Offer } from '../../types/offers';
-import { Reviews } from '../../types/reviews';
-import ReviewCard from '../../components/review-card/review-card';
 import ReviewsForm from '../../components/reviews-form/reviews-form';
 import OfferCard from '../../components/offer-card/offer-card';
-import NotFoundScreen from '../not-found-screen/not-found-screen';
 import { formatRatingToWidth, AuthorizationStatus } from '../../const';
 import Map from '../../components/map/map';
 import useAppSelector from '../../hooks/useAppSelector';
+import {
+  fetchOfferAction,
+  fetchOfferReviewsAction,
+  fetchOffersNearbyAction,
+} from '../../store/api-actions';
+import useAppDispatch from '../../hooks/useAppDispatch';
+import ReviewsList from '../../components/reviews-list/reviews-list';
+import Loader from '../../components/loader/loader';
 
-type PropertyPageProps = {
-  reviews: Reviews;
-};
-
-function PropertyScreen({ reviews }: PropertyPageProps): JSX.Element {
+function PropertyScreen(): JSX.Element {
   const params = useParams();
+  const [activeOfferId, setActiveOfferId] = useState<number | null>(
+    Number(params.id)
+  );
+  const currentOfferId = Number(params.id);
   const currentCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
 
-  const [activeOfferId, setActiveOfferId] = useState<number | null>(
-    Number(params.id)
-  );
+  const offer = useAppSelector((state) => state.offer);
 
-  const currentCityOffers = offers.filter(
-    (offer) => offer.city.name === currentCity.name
-  );
-  const offer: Offer | undefined = currentCityOffers.find(
-    (item) => item.id === Number(params.id)
-  );
-  const reviewsForOffer = reviews.filter((it) => it.id === Number(params.id));
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    dispatch(fetchOfferAction(currentOfferId));
+    dispatch(fetchOffersNearbyAction(currentOfferId));
+    dispatch(fetchOfferReviewsAction(currentOfferId));
+  }, [currentOfferId, dispatch]);
 
-  if (!offer) {
-    return <NotFoundScreen />;
+  const offersNearby = useAppSelector((state) => state.offersNearby);
+  let offersNearbyWithCurrent = null;
+  if (offersNearby !== null && offer !== null) {
+    offersNearbyWithCurrent = [...offersNearby, offer];
   }
 
-  const offersNearby = currentCityOffers
-    .filter((item) => item.id !== Number(params.id))
-    .slice(0, 3);
-  const offersNearbyWithCurrent = offersNearby.concat(offer);
+  const reviewsForOffer = useAppSelector((state) => state.reviewsForOffer);
 
+  if (!offer) {
+    return <Loader />;
+  }
 
   return (
     <main className='page__main page__main--property'>
@@ -135,13 +137,13 @@ function PropertyScreen({ reviews }: PropertyPageProps): JSX.Element {
                   {reviewsForOffer.length}
                 </span>
               </h2>
-              <ul className='reviews__list'>
-                {reviewsForOffer.map((item) => (
-                  <ReviewCard key={item.id} review={item} />
-                ))}
-              </ul>
+              {reviewsForOffer && reviewsForOffer.length > 0 ? (
+                <ReviewsList reviews={reviewsForOffer} />
+              ) : (
+                ''
+              )}
               {authorizationStatus === AuthorizationStatus.Auth ? (
-                <ReviewsForm />
+                <ReviewsForm currentOfferId={currentOfferId} />
               ) : null}
             </section>
           </div>
@@ -150,7 +152,7 @@ function PropertyScreen({ reviews }: PropertyPageProps): JSX.Element {
           <Map
             city={currentCity}
             offers={offersNearbyWithCurrent}
-            activeOfferId={Number(params.id)}
+            activeOfferId={currentOfferId}
             mapClassName='property__map'
           />
         </section>
@@ -161,7 +163,7 @@ function PropertyScreen({ reviews }: PropertyPageProps): JSX.Element {
             Other places in the neighbourhood
           </h2>
           <div className='near-places__list places__list'>
-            {offersNearby.map((item) => (
+            {offersNearby?.map((item) => (
               <OfferCard
                 key={item.id}
                 offer={item}

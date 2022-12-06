@@ -5,6 +5,7 @@ export enum AppRoute {
   Main = '/',
   Login = '/login',
   Room = '/offer/:id',
+  NotFound = '/404',
 }
 
 export enum APIRoute {
@@ -32,6 +33,11 @@ const URL_MARKER_CURRENT =
 
 const INITIAL_SORT_VALUE = 'Popular';
 
+const REVIEW_MIN_LENGTH = 50;
+const REVIEW_MAX_LENGTH = 50;
+
+const RATING_NUMBERS = [1, 2, 3, 4, 5];
+
 export enum SortOptions {
   Popular = 'Popular',
   LowToHigh = 'Price: low to high',
@@ -39,4 +45,4 @@ export enum SortOptions {
   TopRated = 'Top rated first',
 }
 
-export { formatRatingToWidth, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, INITIAL_SORT_VALUE};
+export { formatRatingToWidth, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, INITIAL_SORT_VALUE, REVIEW_MIN_LENGTH, REVIEW_MAX_LENGTH, RATING_NUMBERS};

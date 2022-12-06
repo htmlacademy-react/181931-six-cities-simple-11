@@ -2,6 +2,7 @@ import { createAction } from '@reduxjs/toolkit';
 import { CityType } from '../types/city';
 import { Offer } from '../types/offers';
 import { AuthorizationStatus, AppRoute } from '../const';
+import { Review } from '../types/reviews';
 
 export const changeCityAction = createAction(
   'city/changeCity',
@@ -16,6 +17,21 @@ export const showOffersAction = createAction(
 export const sortOffersByAction = createAction(
   'offers/sortOffersBy',
   (sortingOption: string) => ({ payload: sortingOption })
+);
+
+export const setOffersNearbyAction = createAction(
+  'offer/setOffersNearby',
+  (value: Offer[]) => ({payload: value})
+);
+
+export const setOfferAction = createAction(
+  'offer/setOffer',
+  (value: Offer) => ({payload: value})
+);
+
+export const setOfferReviewsAction = createAction(
+  'offer/setOfferReviews',
+  (value: Review[]) => ({payload: value})
 );
 
 export const setIsLoadingAction = createAction(
@@ -34,10 +50,15 @@ export const setOffersDataLoadingStatus = createAction<boolean>(
 );
 
 export const redirectToRoute = createAction<AppRoute>(
-  'user/redirectToRoute'
+  'data/redirectToRoute'
 );
 
 export const setUserEmailAction = createAction(
   'user/setUserEmail',
   (value: string) => ({ payload: value })
+);
+
+export const setOfferReviewFormBlocked = createAction(
+  'offer/setOfferReviewFormBlocked',
+  (status: boolean) => ({payload: status})
 );

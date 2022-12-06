@@ -1,12 +1,14 @@
-import { useRef, FormEvent } from 'react';
-import { Link } from 'react-router-dom';
+import { useRef, FormEvent, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import useAppDispatch from '../../hooks/useAppDispatch';
+import useAppSelector from '../../hooks/useAppSelector';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
-import { AppRoute } from '../../const';
+import { AppRoute, AuthorizationStatus } from '../../const';
 import { setUserEmailAction } from '../../store/action';
 
 function LoginScreen(): JSX.Element {
+  const navigate = useNavigate();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
 
@@ -27,6 +29,14 @@ function LoginScreen(): JSX.Element {
       });
     }
   };
+
+  const authorizationStatus = useAppSelector(
+    (state) => state.authorizationStatus
+  );
+
+  useEffect(() => {
+    authorizationStatus === AuthorizationStatus.Auth && navigate(AppRoute.Main);
+  }, [authorizationStatus, navigate]);
 
   return (
     <main className='page__main page__main--login'>
