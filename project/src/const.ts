@@ -34,7 +34,7 @@ const URL_MARKER_CURRENT =
 const INITIAL_SORT_VALUE = 'Popular';
 
 const REVIEW_MIN_LENGTH = 50;
-const REVIEW_MAX_LENGTH = 50;
+const REVIEW_MAX_LENGTH = 300;
 
 const RATING_NUMBERS = [1, 2, 3, 4, 5];
 

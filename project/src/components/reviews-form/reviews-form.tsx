@@ -1,5 +1,9 @@
 import React, { useState, ChangeEvent } from 'react';
-import { RATING_NUMBERS, REVIEW_MAX_LENGTH, REVIEW_MIN_LENGTH } from '../../const';
+import {
+  RATING_NUMBERS,
+  REVIEW_MAX_LENGTH,
+  REVIEW_MIN_LENGTH,
+} from '../../const';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { setOfferReviewFormBlocked } from '../../store/action';
@@ -9,15 +13,16 @@ type ReviewFormProps = {
   currentOfferId: number;
 };
 
-function ReviewsForm({currentOfferId}: ReviewFormProps): JSX.Element {
+function ReviewsForm({ currentOfferId }: ReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const isOfferReviewFormBlocked = useAppSelector((state) => state.isOfferReviewFormBlocked);
+  const isOfferReviewFormBlocked = useAppSelector(
+    (state) => state.isOfferReviewFormBlocked
+  );
 
   const [formData, setFormData] = useState({
     rating: 0,
     review: '',
   });
-
 
   const handleFieldChange = (
     evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
@@ -32,15 +37,17 @@ function ReviewsForm({currentOfferId}: ReviewFormProps): JSX.Element {
     if (currentOfferId && formData.rating && formData.review) {
       dispatch(setOfferReviewFormBlocked(true));
 
-      dispatch(sendOfferReviewAction({
-        id: currentOfferId,
-        rating: Number(formData.rating),
-        comment: formData.review,
-      }));
+      dispatch(
+        sendOfferReviewAction({
+          id: currentOfferId,
+          rating: Number(formData.rating),
+          comment: formData.review,
+        })
+      );
 
       setFormData({
         rating: 0,
-        review: ''
+        review: '',
       });
     }
   };
@@ -96,7 +103,12 @@ function ReviewsForm({currentOfferId}: ReviewFormProps): JSX.Element {
         <button
           className='reviews__submit form__submit button'
           type='submit'
-          disabled={((formData.review.length > REVIEW_MIN_LENGTH || formData.review.length < REVIEW_MAX_LENGTH) || formData.rating === 0 || isOfferReviewFormBlocked)}
+          disabled={
+            formData.review.length < REVIEW_MIN_LENGTH ||
+            formData.review.length > REVIEW_MAX_LENGTH ||
+            formData.rating === 0 ||
+            isOfferReviewFormBlocked
+          }
         >
           Submit
         </button>

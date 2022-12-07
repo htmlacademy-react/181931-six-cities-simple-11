@@ -133,14 +133,18 @@ export const logoutAction = createAsyncThunk<
   dispatch(setAuth(AuthorizationStatus.NoAuth));
 });
 
-export const sendOfferReviewAction = createAsyncThunk<void, ReviewData, {
-  dispatch: AppDispatch;
-  state: State;
-  extra: AxiosInstance;
-}>(
+export const sendOfferReviewAction = createAsyncThunk<
+  void,
+  ReviewData,
+  {
+    dispatch: AppDispatch;
+    state: State;
+    extra: AxiosInstance;
+  }
+>(
   'data/sendReviewAction',
-  async ({id, rating, comment}, {dispatch, extra: api}) => {
-    await api.post(`${APIRoute.Reviews}/${id}`, {rating, comment});
+  async ({ id, rating, comment }, { dispatch, extra: api }) => {
+    await api.post(`${APIRoute.Reviews}/${id}`, { rating, comment });
     dispatch(fetchOfferReviewsAction(id));
     dispatch(setOfferReviewFormBlocked(false));
   }

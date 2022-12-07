@@ -6,6 +6,7 @@ import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { AppRoute, AuthorizationStatus } from '../../const';
 import { setUserEmailAction } from '../../store/action';
+import { toast } from 'react-toastify';
 
 function LoginScreen(): JSX.Element {
   const navigate = useNavigate();
@@ -23,6 +24,14 @@ function LoginScreen(): JSX.Element {
     evt.preventDefault();
 
     if (loginRef.current !== null && passwordRef.current !== null) {
+      const password = passwordRef.current.value.trim();
+      const reg = /^(?=.*\d)(?=.*[a-zA-Z]).{2,20}$/;
+
+      if (!reg.test(password) || password.length < 2) {
+        toast.warn('the password consists of at least one letter and a number');
+        return;
+      }
+
       onSubmit({
         login: loginRef.current.value,
         password: passwordRef.current.value,
@@ -33,6 +42,7 @@ function LoginScreen(): JSX.Element {
   const authorizationStatus = useAppSelector(
     (state) => state.authorizationStatus
   );
+
 
   useEffect(() => {
     authorizationStatus === AuthorizationStatus.Auth && navigate(AppRoute.Main);
