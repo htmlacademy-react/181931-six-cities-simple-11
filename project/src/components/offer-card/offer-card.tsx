@@ -3,7 +3,6 @@ import { generatePath } from 'react-router';
 import { AppRoute } from '../../const';
 import { Offer } from '../../types/offers';
 import { formatRatingToWidth } from '../../const';
-import { MouseEvent } from 'react';
 import cn from 'classnames';
 
 type CardProps = {
@@ -11,18 +10,24 @@ type CardProps = {
   onMouseCardEnter: (id: number) => void;
   onMouseCardLeave: () => void;
   isActive: boolean;
-  cardClassName:string;
+  cardClassName: string;
 };
 
-function OfferCard({offer,
+function OfferCard({
+  offer,
   onMouseCardEnter,
   onMouseCardLeave,
   isActive,
-  cardClassName} : CardProps): JSX.Element {
-
+  cardClassName,
+}: CardProps): JSX.Element {
   return (
-    <article className={cn('place-card', `${cardClassName}__card`, { active: isActive })}
+    <article
+      className={cn('place-card', `${cardClassName}__card`, {
+        active: isActive,
+      })}
       id={`offer-${offer.id}`}
+      onMouseEnter={() => onMouseCardEnter(offer.id)}
+      onMouseLeave={() => onMouseCardLeave()}
     >
       {offer.isPremium && (
         <div className='place-card__mark'>
@@ -44,7 +49,7 @@ function OfferCard({offer,
         <div className='place-card__price-wrapper'>
           <div className='place-card__price'>
             <b className='place-card__price-value'>&euro;{offer.price}</b>
-            <span className='place-card__price-text'>&/47;&nbsp;night</span>
+            <span className='place-card__price-text'>/&nbsp;night</span>
           </div>
         </div>
         <div className='place-card__rating rating'>

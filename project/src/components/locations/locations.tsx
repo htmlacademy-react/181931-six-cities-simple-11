@@ -1,10 +1,7 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { MouseEvent } from 'react';
 import { cities } from '../../mocks/cities';
 import { CityType } from '../../types/city';
 import { changeCityAction } from '../../store/action';
-import { AppRoute } from '../../const';
 import cn from 'classnames';
 import useAppDispatch from '../../hooks/useAppDispatch';
 
@@ -16,7 +13,6 @@ function LocationsList({ currentCity }: CityMenuProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleChangeCity = (
-    // event: MouseEvent<HTMLAnchorElement>,
     city: CityType
   ) => {
     dispatch(changeCityAction(city));

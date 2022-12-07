@@ -1,5 +1,4 @@
 export type Review = {
-  hotelId: number;
   comment: string;
   date: string;
   id: number;
@@ -11,4 +10,7 @@ export type Review = {
     name: string;
   };
 }
+
+export type ReviewData = Omit<Review, 'user' | 'date'>;
+
 export type Reviews = Review[];
