@@ -4,15 +4,13 @@ import { Link } from 'react-router-dom';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { logoutAction } from '../../store/api-actions';
 import { AppRoute, AuthorizationStatus } from '../../const';
+import { getAuthorizationStatus, getUserEmail } from '../../store/user-process/selector';
 
 function Header(): JSX.Element {
   const dispatch = useAppDispatch();
 
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
-  const login = useAppSelector((state) => state.login);
-
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
+  const login = useAppSelector(getUserEmail);
   const handleLogoutClick = () => {
     dispatch(logoutAction());
   };

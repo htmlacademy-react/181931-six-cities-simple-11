@@ -5,8 +5,6 @@ import {
   REVIEW_MIN_LENGTH,
 } from '../../const';
 import useAppDispatch from '../../hooks/useAppDispatch';
-import useAppSelector from '../../hooks/useAppSelector';
-import { setOfferReviewFormBlocked } from '../../store/action';
 import { sendOfferReviewAction } from '../../store/api-actions';
 
 type ReviewFormProps = {
@@ -15,10 +13,6 @@ type ReviewFormProps = {
 
 function ReviewsForm({ currentOfferId }: ReviewFormProps): JSX.Element {
   const dispatch = useAppDispatch();
-  const isOfferReviewFormBlocked = useAppSelector(
-    (state) => state.isOfferReviewFormBlocked
-  );
-
   const [formData, setFormData] = useState({
     rating: 0,
     review: '',
@@ -35,7 +29,6 @@ function ReviewsForm({ currentOfferId }: ReviewFormProps): JSX.Element {
     evt.preventDefault();
 
     if (currentOfferId && formData.rating && formData.review) {
-      dispatch(setOfferReviewFormBlocked(true));
 
       dispatch(
         sendOfferReviewAction({
@@ -106,8 +99,7 @@ function ReviewsForm({ currentOfferId }: ReviewFormProps): JSX.Element {
           disabled={
             formData.review.length < REVIEW_MIN_LENGTH ||
             formData.review.length > REVIEW_MAX_LENGTH ||
-            formData.rating === 0 ||
-            isOfferReviewFormBlocked
+            formData.rating === 0
           }
         >
           Submit

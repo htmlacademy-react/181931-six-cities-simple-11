@@ -3,11 +3,13 @@ import { SortOptions } from '../../const';
 import useAppSelector from '../../hooks/useAppSelector';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import cn from 'classnames';
-import { sortOffersByAction } from '../../store/action';
+import { sortOffersByAction } from '../../store/offer-process/offer-process';
+import { getSortOffersBy } from '../../store/offer-process/selectors';
 
 function Sort(): JSX.Element {
   const dispatch = useAppDispatch();
-  const activeSortOffersBy = useAppSelector((state) => state.sortOffersBy);
+  const activeSortOffersBy = useAppSelector(getSortOffersBy);
+
   const [isSortOpen, setSortOpen] = useState(false);
 
   return (

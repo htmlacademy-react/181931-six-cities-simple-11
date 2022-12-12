@@ -45,4 +45,10 @@ export enum SortOptions {
   TopRated = 'Top rated first',
 }
 
+export enum NameSpace {
+  Offer = 'OFFER',
+  Review = 'REVIEW',
+  User = 'USER',
+}
+
 export { formatRatingToWidth, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, INITIAL_SORT_VALUE, REVIEW_MIN_LENGTH, REVIEW_MAX_LENGTH, RATING_NUMBERS};
