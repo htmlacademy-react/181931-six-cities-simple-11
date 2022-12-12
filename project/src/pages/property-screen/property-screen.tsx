@@ -13,6 +13,9 @@ import {
 import useAppDispatch from '../../hooks/useAppDispatch';
 import ReviewsList from '../../components/reviews-list/reviews-list';
 import Loader from '../../components/loader/loader';
+import { getCity, getOffer, getOffersNearby } from '../../store/offer-process/selectors';
+import { getAuthorizationStatus } from '../../store/user-process/selector';
+import { getOfferReviews } from '../../store/reviews-process/selector';
 
 function PropertyScreen(): JSX.Element {
   const params = useParams();
@@ -20,12 +23,11 @@ function PropertyScreen(): JSX.Element {
     Number(params.id)
   );
   const currentOfferId = Number(params.id);
-  const currentCity = useAppSelector((state) => state.city);
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
-  const offer = useAppSelector((state) => state.offer);
+  const currentCity = useAppSelector(getCity);
+
+  const offer = useAppSelector(getOffer);
 
   const dispatch = useAppDispatch();
   useEffect(() => {
@@ -34,13 +36,13 @@ function PropertyScreen(): JSX.Element {
     dispatch(fetchOfferReviewsAction(currentOfferId));
   }, [currentOfferId, dispatch]);
 
-  const offersNearby = useAppSelector((state) => state.offersNearby);
+  const offersNearby = useAppSelector(getOffersNearby);
   let offersNearbyWithCurrent = null;
   if (offersNearby !== null && offer !== null) {
     offersNearbyWithCurrent = [...offersNearby, offer];
   }
 
-  const reviewsForOffer = useAppSelector((state) => state.reviewsForOffer);
+  const reviewsForOffer = useAppSelector(getOfferReviews);
 
   if (!offer) {
     return <Loader />;

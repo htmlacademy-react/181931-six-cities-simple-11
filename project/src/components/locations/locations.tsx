@@ -1,7 +1,7 @@
 import React from 'react';
 import { cities } from '../../mocks/cities';
 import { CityType } from '../../types/city';
-import { changeCityAction } from '../../store/action';
+import { changeCityAction } from '../../store/offer-process/offer-process';
 import cn from 'classnames';
 import useAppDispatch from '../../hooks/useAppDispatch';
 
@@ -17,6 +17,7 @@ function LocationsList({ currentCity }: CityMenuProps): JSX.Element {
   ) => {
     dispatch(changeCityAction(city));
   };
+
   return (
     <ul className='locations__list tabs__list'>
       {cities.map((city) => (

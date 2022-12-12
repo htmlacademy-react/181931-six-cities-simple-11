@@ -6,17 +6,17 @@ import useAppSelector from '../../hooks/useAppSelector';
 import cn from 'classnames';
 import { useState } from 'react';
 import Sort from '../../components/sort/sort';
-import { sortOffers } from '../../utils/sort';
 import Loader from '../../components/loader/loader';
+import { getCity, getCurrentCityOffers, getCurrentCitySortedOffers, getIsOffersLoading } from '../../store/offer-process/selectors';
 
 function MainScreen(): JSX.Element {
   const [activeCardId, setActiveCardId] = useState<number | null>(null);
-  const currentCity = useAppSelector((state) => state.city);
-  const offers = useAppSelector((state) => state.offers);
-  let currentCityOffers = offers.filter(
-    (offer) => offer.city.name === currentCity.name
-  );
 
+  const currentCity = useAppSelector(getCity);
+
+  const currentCityOffers = useAppSelector(getCurrentCitySortedOffers);
+
+  const offers = useAppSelector(getCurrentCityOffers);
   const handleMouseEnter = (offerId: number | null) => {
     setActiveCardId(offerId);
   };
@@ -24,12 +24,7 @@ function MainScreen(): JSX.Element {
     setActiveCardId(null);
   };
 
-  const currentSortOffersBy = useAppSelector((state) => state.sortOffersBy);
-  currentCityOffers = sortOffers(currentCityOffers, currentSortOffersBy);
-
-  const isOffersDataLoading = useAppSelector(
-    (state) => state.isOffersDataLoading
-  );
+  const isOffersDataLoading = useAppSelector(getIsOffersLoading);
 
   return (
     <main

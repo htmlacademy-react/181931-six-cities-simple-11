@@ -5,8 +5,8 @@ import useAppSelector from '../../hooks/useAppSelector';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
 import { AppRoute, AuthorizationStatus } from '../../const';
-import { setUserEmailAction } from '../../store/action';
 import { toast } from 'react-toastify';
+import { getAuthorizationStatus, setUserEmailAction } from '../../store/user-process/selector';
 
 function LoginScreen(): JSX.Element {
   const navigate = useNavigate();
@@ -39,9 +39,7 @@ function LoginScreen(): JSX.Element {
     }
   };
 
-  const authorizationStatus = useAppSelector(
-    (state) => state.authorizationStatus
-  );
+  const authorizationStatus = useAppSelector(getAuthorizationStatus);
 
 
   useEffect(() => {
