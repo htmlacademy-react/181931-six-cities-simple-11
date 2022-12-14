@@ -1,8 +1,7 @@
 import React, { useState, ChangeEvent } from 'react';
 import {
   RATING_NUMBERS,
-  REVIEW_MAX_LENGTH,
-  REVIEW_MIN_LENGTH,
+  ReviewLength
 } from '../../const';
 import useAppDispatch from '../../hooks/useAppDispatch';
 import { sendOfferReviewAction } from '../../store/api-actions';
@@ -18,6 +17,8 @@ function ReviewsForm({ currentOfferId }: ReviewFormProps): JSX.Element {
     review: '',
   });
 
+  const [reviewIsSending, setStatusReviewSending] = useState(false);
+
   const handleFieldChange = (
     evt: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>
   ) => {
@@ -27,6 +28,7 @@ function ReviewsForm({ currentOfferId }: ReviewFormProps): JSX.Element {
 
   const handleFormSubmit = (evt: ChangeEvent<HTMLFormElement>) => {
     evt.preventDefault();
+    setStatusReviewSending(true);
 
     if (currentOfferId && formData.rating && formData.review) {
 
@@ -42,18 +44,27 @@ function ReviewsForm({ currentOfferId }: ReviewFormProps): JSX.Element {
         rating: 0,
         review: '',
       });
+
+      setStatusReviewSending(false);
     }
   };
 
   const ratingInputs = RATING_NUMBERS.map((item: number) => (
     <React.Fragment key={item}>
       <input
-        onChange={handleFieldChange}
+        onChange={(evt) => {
+          setFormData({
+            ...formData,
+            rating: Number(evt.target.value)
+          });
+        }}
         className='form__rating-input visually-hidden'
         name='rating'
-        value={item.toString()}
-        id={`${item.toString()}-stars`}
+        value={item}
+        id={`${item}-stars`}
         type='radio'
+        checked={formData.rating === item}
+        disabled = {reviewIsSending}
       />
       <label
         htmlFor={`${item.toString()}-stars`}
@@ -77,7 +88,7 @@ function ReviewsForm({ currentOfferId }: ReviewFormProps): JSX.Element {
       <label className='reviews__label form__label' htmlFor='review'>
         Your review
       </label>
-      <div className='reviews__rating-form form__rating'>{ratingInputs}</div>
+      <div className='reviews__rating-form form__rating'>{ratingInputs }</div>
       <textarea
         onChange={handleFieldChange}
         className='reviews__textarea form__textarea'
@@ -97,9 +108,9 @@ function ReviewsForm({ currentOfferId }: ReviewFormProps): JSX.Element {
           className='reviews__submit form__submit button'
           type='submit'
           disabled={
-            formData.review.length < REVIEW_MIN_LENGTH ||
-            formData.review.length > REVIEW_MAX_LENGTH ||
-            formData.rating === 0
+            formData.review.length < ReviewLength.Min ||
+            formData.review.length > ReviewLength.Max ||
+            formData.rating === 0 || reviewIsSending
           }
         >
           Submit

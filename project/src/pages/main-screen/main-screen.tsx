@@ -1,6 +1,5 @@
-import React from 'react';
 import OfferCard from '../../components/offer-card/offer-card';
-import LocationsList from '../../components/locations/locations';
+import Locations from '../../components/locations/locations';
 import Map from '../../components/map/map';
 import useAppSelector from '../../hooks/useAppSelector';
 import cn from 'classnames';
@@ -35,7 +34,7 @@ function MainScreen(): JSX.Element {
       <h1 className='visually-hidden'>Cities</h1>
       <div className='tabs'>
         <section className='locations container'>
-          <LocationsList currentCity={currentCity} />
+          <Locations currentCity={currentCity} />
         </section>
       </div>
       <div className='cities'>

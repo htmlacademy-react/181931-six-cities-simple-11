@@ -1,5 +1,9 @@
+import { cities } from './mocks/cities';
+
 const RATING_STARS = 5;
 const MAX_PERCENT = 100;
+const INITIAL_SORT_VALUE = 'Popular';
+const RATING_NUMBERS = [1, 2, 3, 4, 5];
 
 export enum AppRoute {
   Main = '/',
@@ -21,22 +25,25 @@ export enum AuthorizationStatus {
   Unknown = 'UNKNOWN',
 }
 
-function formatRatingToWidth(rating: number) {
-  return (MAX_PERCENT / RATING_STARS) * Math.round(rating);
+export const formatRatingToWidth = (rating: number) => (MAX_PERCENT / RATING_STARS) * Math.round(rating);
+
+export const getRandomPositiveNumber = () => {
+  const min = 0;
+  const max = cities.length;
+  const randomIndex = Math.floor(Math.random() * (max - min)) + min;
+  return randomIndex;
+};
+
+export enum MarkerTypes {
+  Default = 'img/pin.svg',
+  Current = 'img/pin-active.svg'
 }
 
-const URL_MARKER_DEFAULT =
-  'img/pin.svg';
 
-const URL_MARKER_CURRENT =
-  'img/pin-active.svg';
-
-const INITIAL_SORT_VALUE = 'Popular';
-
-const REVIEW_MIN_LENGTH = 50;
-const REVIEW_MAX_LENGTH = 300;
-
-const RATING_NUMBERS = [1, 2, 3, 4, 5];
+export enum ReviewLength {
+  Min = 50,
+  Max = 300
+}
 
 export enum SortOptions {
   Popular = 'Popular',
@@ -51,4 +58,4 @@ export enum NameSpace {
   User = 'USER',
 }
 
-export { formatRatingToWidth, URL_MARKER_DEFAULT, URL_MARKER_CURRENT, INITIAL_SORT_VALUE, REVIEW_MIN_LENGTH, REVIEW_MAX_LENGTH, RATING_NUMBERS};
+export { INITIAL_SORT_VALUE, RATING_NUMBERS};
