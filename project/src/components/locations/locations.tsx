@@ -1,4 +1,3 @@
-import React from 'react';
 import { cities } from '../../mocks/cities';
 import { CityType } from '../../types/city';
 import { changeCityAction } from '../../store/offer-process/offer-process';
@@ -9,7 +8,7 @@ type CityMenuProps = {
   currentCity: CityType;
 };
 
-function LocationsList({ currentCity }: CityMenuProps): JSX.Element {
+function Locations({ currentCity }: CityMenuProps): JSX.Element {
   const dispatch = useAppDispatch();
 
   const handleChangeCity = (
@@ -37,4 +36,4 @@ function LocationsList({ currentCity }: CityMenuProps): JSX.Element {
   );
 }
 
-export default LocationsList;
+export default Locations;

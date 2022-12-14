@@ -4,14 +4,22 @@ import useAppDispatch from '../../hooks/useAppDispatch';
 import useAppSelector from '../../hooks/useAppSelector';
 import { loginAction } from '../../store/api-actions';
 import { AuthData } from '../../types/auth-data';
-import { AppRoute, AuthorizationStatus } from '../../const';
+import { AppRoute, AuthorizationStatus, getRandomPositiveNumber } from '../../const';
 import { toast } from 'react-toastify';
 import { getAuthorizationStatus, setUserEmailAction } from '../../store/user-process/selector';
+import { changeCityAction } from '../../store/offer-process/offer-process';
+import { cities } from '../../mocks/cities';
 
 function LoginScreen(): JSX.Element {
   const navigate = useNavigate();
   const loginRef = useRef<HTMLInputElement | null>(null);
   const passwordRef = useRef<HTMLInputElement | null>(null);
+
+  const rundomIndex = getRandomPositiveNumber();
+
+  const onCityClick = () => {
+    dispatch(changeCityAction(cities[rundomIndex]));
+  };
 
   const dispatch = useAppDispatch();
 
@@ -40,7 +48,6 @@ function LoginScreen(): JSX.Element {
   };
 
   const authorizationStatus = useAppSelector(getAuthorizationStatus);
-
 
   useEffect(() => {
     authorizationStatus === AuthorizationStatus.Auth && navigate(AppRoute.Main);
@@ -89,8 +96,8 @@ function LoginScreen(): JSX.Element {
         </section>
         <section className='locations locations--login locations--current'>
           <div className='locations__item'>
-            <Link className='locations__item-link' to={AppRoute.Main}>
-              <span>Amsterdam</span>
+            <Link className='locations__item-link' to={AppRoute.Main} onClick={()=> onCityClick()}>
+              <span>{cities[rundomIndex].name}</span>
             </Link>
           </div>
         </section>

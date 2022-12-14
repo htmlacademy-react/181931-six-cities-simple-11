@@ -74,7 +74,7 @@ function PropertyScreen(): JSX.Element {
               <div className='property__stars rating__stars'>
                 <span
                   style={{
-                    width: formatRatingToWidth(offer.rating),
+                    width: `${formatRatingToWidth(offer.rating)}%`,
                   }}
                 >
                 </span>
